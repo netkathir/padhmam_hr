@@ -197,8 +197,27 @@
                 <span class="nav-link disabled">Shift Change History</span>
             @endcan
 
+            @can('viewAny', \App\Models\Employee::class)
+                <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Employee Management</div>
+                <a class="nav-link {{ request()->routeIs('employees.index') && !request('status') ? 'active' : '' }}" href="{{ route('employees.index') }}">
+                    <i class="bi bi-people me-2"></i>Employee List
+                </a>
+                @can('create', \App\Models\Employee::class)
+                    <a class="nav-link {{ request()->routeIs('employees.create') ? 'active' : '' }}" href="{{ route('employees.create') }}">
+                        <i class="bi bi-person-plus me-2"></i>Register Employee
+                    </a>
+                @endcan
+                <a class="nav-link {{ request()->routeIs('employees.index') && request('status') === 'draft' ? 'active' : '' }}" href="{{ route('employees.index', ['status' => 'draft']) }}">
+                    <i class="bi bi-person-lines-fill me-2"></i>Draft Registrations
+                </a>
+                <span class="nav-link disabled">Employee Transfer</span>
+                <span class="nav-link disabled">Employee Classification Change</span>
+                <span class="nav-link disabled">Employee Promotion</span>
+                <span class="nav-link disabled">Employee Rejoining</span>
+                <span class="nav-link disabled">Bulk Employee Import</span>
+            @endcan
+
             <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Future Modules</div>
-            <span class="nav-link disabled">Employee Management</span>
             <span class="nav-link disabled">Attendance Management</span>
             <span class="nav-link disabled">Leave and LOP</span>
             <span class="nav-link disabled">Payroll Management</span>

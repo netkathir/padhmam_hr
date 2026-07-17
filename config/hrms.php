@@ -85,9 +85,21 @@ return [
             'employee.view',
             'employee.create',
             'employee.edit',
+            'employee.complete-registration',
             'employee.activate',
             'employee.inactivate',
+            'employee.reactivate',
+            'employee.separate',
+            'employee.view-sensitive',
+            'employee.edit-sensitive',
+            'employee.view-history',
             'employee.export',
+        ],
+        'Employee Document' => [
+            'employee-document.view',
+            'employee-document.upload',
+            'employee-document.download',
+            'employee-document.inactivate',
         ],
         'Contractor' => [
             'contractor.view',
@@ -196,6 +208,26 @@ return [
         'SUN' => 'Sunday',
     ],
     'shift_grace_minutes_max' => env('HRMS_SHIFT_GRACE_MINUTES_MAX', 480),
+
+    'employee_document_types' => [
+        'aadhaar' => 'Aadhaar',
+        'pan' => 'PAN',
+        'passport' => 'Passport',
+        'driving_licence' => 'Driving Licence',
+        'voter_id' => 'Voter ID',
+        'education_certificate' => 'Education Certificate',
+        'experience_certificate' => 'Experience Certificate',
+        'appointment_letter' => 'Appointment Letter',
+        'contract_copy' => 'Contract Copy',
+        'bank_proof' => 'Bank Proof',
+        'medical_certificate' => 'Medical Certificate',
+        'photograph' => 'Photograph',
+        'other' => 'Other',
+    ],
+    'employee_document_max_kb' => env('HRMS_EMPLOYEE_DOCUMENT_MAX_KB', 5120),
+    'employee_photo_max_kb' => env('HRMS_EMPLOYEE_PHOTO_MAX_KB', 2048),
+    'employee_minimum_age_years' => env('HRMS_EMPLOYEE_MINIMUM_AGE_YEARS', 18),
+    'employee_reporting_chain_max_depth' => 50,
 
     'features' => [
         // Custom Employee Types beyond the three mandatory system

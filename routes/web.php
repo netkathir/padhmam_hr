@@ -16,6 +16,11 @@ use App\Http\Controllers\Contractors\ContractorEngagementController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\EmployeeNumbering\EmployeeNumberRuleController;
 use App\Http\Controllers\EmployeeNumbering\EmployeeNumberSequenceController;
+use App\Http\Controllers\Employees\EmployeeController;
+use App\Http\Controllers\Employees\EmployeeDocumentController;
+use App\Http\Controllers\Employees\EmployeeRegistrationController;
+use App\Http\Controllers\Employees\EmployeeSeparationController;
+use App\Http\Controllers\Employees\EmployeeStatusController;
 use App\Http\Controllers\Masters\DepartmentController;
 use App\Http\Controllers\Masters\DesignationController;
 use App\Http\Controllers\Masters\EmployeeTypeController;
@@ -159,5 +164,42 @@ Route::middleware(['auth', 'branch.context'])->group(function (): void {
         Route::patch('/master/{shift}/activate', [ShiftController::class, 'activate'])->middleware('branch.active')->name('master.activate');
         Route::patch('/master/{shift}/inactivate', [ShiftController::class, 'inactivate'])->middleware('branch.active')->name('master.inactivate');
         Route::post('/master/{shift}/clone', [ShiftController::class, 'clone'])->middleware('branch.active')->name('master.clone');
+    });
+
+    Route::prefix('employees')->name('employees.')->group(function (): void {
+        Route::get('/', [EmployeeController::class, 'index'])->name('index');
+
+        Route::get('/create', [EmployeeRegistrationController::class, 'create'])->middleware('branch.active')->name('create');
+        Route::post('/draft', [EmployeeRegistrationController::class, 'storeDraft'])->middleware('branch.active')->name('draft.store');
+
+        // Dynamic dropdown / lookup endpoints (spec section 58) — registered
+        // before the {employee} routes below so "lookup" is never mistaken
+        // for a bound Employee identifier.
+        Route::get('/lookup/departments/{department}/sections', [EmployeeRegistrationController::class, 'sectionsByDepartment'])->name('lookup.sections');
+        Route::get('/lookup/designations', [EmployeeRegistrationController::class, 'designationsByScope'])->name('lookup.designations');
+        Route::get('/lookup/reporting-managers', [EmployeeRegistrationController::class, 'reportingManagers'])->name('lookup.reporting-managers');
+        Route::get('/lookup/contractors', [EmployeeRegistrationController::class, 'eligibleContractors'])->name('lookup.contractors');
+        Route::get('/lookup/contractors/{contractor}/engagement', [EmployeeRegistrationController::class, 'contractorEngagementDetails'])->name('lookup.contractor-engagement');
+        Route::get('/lookup/fixed-shifts', [EmployeeRegistrationController::class, 'eligibleFixedShifts'])->name('lookup.fixed-shifts');
+        Route::get('/lookup/employee-number-preview', [EmployeeRegistrationController::class, 'employeeNumberPreview'])->name('lookup.employee-number-preview');
+
+        Route::put('/{employee}/draft', [EmployeeRegistrationController::class, 'updateDraft'])->middleware('branch.active')->name('draft.update');
+        Route::get('/{employee}/review', [EmployeeRegistrationController::class, 'review'])->name('review');
+        Route::post('/{employee}/complete-registration', [EmployeeRegistrationController::class, 'complete'])->middleware('branch.active')->name('complete-registration');
+
+        Route::get('/{employee}', [EmployeeController::class, 'show'])->name('show');
+        Route::get('/{employee}/edit', [EmployeeController::class, 'edit'])->middleware('branch.active')->name('edit');
+        Route::put('/{employee}', [EmployeeController::class, 'update'])->middleware('branch.active')->name('update');
+
+        Route::patch('/{employee}/activate', [EmployeeStatusController::class, 'activate'])->middleware('branch.active')->name('activate');
+        Route::patch('/{employee}/inactivate', [EmployeeStatusController::class, 'inactivate'])->middleware('branch.active')->name('inactivate');
+        Route::patch('/{employee}/reactivate', [EmployeeStatusController::class, 'reactivate'])->middleware('branch.active')->name('reactivate');
+
+        Route::post('/{employee}/separate', [EmployeeSeparationController::class, 'store'])->middleware('branch.active')->name('separate');
+
+        Route::post('/{employee}/documents', [EmployeeDocumentController::class, 'store'])->middleware('branch.active')->name('documents.store');
+        Route::get('/documents/{document}/download', [EmployeeDocumentController::class, 'download'])->name('documents.download');
+        Route::post('/documents/{document}/replace', [EmployeeDocumentController::class, 'replace'])->middleware('branch.active')->name('documents.replace');
+        Route::patch('/documents/{document}/inactivate', [EmployeeDocumentController::class, 'inactivate'])->middleware('branch.active')->name('documents.inactivate');
     });
 });
