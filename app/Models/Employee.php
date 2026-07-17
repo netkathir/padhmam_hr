@@ -193,6 +193,32 @@ class Employee extends Model
         return $this->belongsTo(Shift::class, 'fixed_shift_id');
     }
 
+    public function shiftAssignments(): HasMany
+    {
+        return $this->hasMany(EmployeeShiftAssignment::class)->orderByDesc('effective_from');
+    }
+
+    public function scheduledShiftAssignments(): HasMany
+    {
+        return $this->hasMany(EmployeeShiftAssignment::class)->scheduled();
+    }
+
+    public function completedShiftAssignments(): HasMany
+    {
+        return $this->hasMany(EmployeeShiftAssignment::class)->completed();
+    }
+
+    /**
+     * Quick-access convenience relation only — the authoritative,
+     * date-correct current Shift must always be resolved through
+     * EmployeeShiftResolutionService::resolveEmployeeShift(), never by
+     * trusting is_current alone (spec section 34).
+     */
+    public function currentShiftAssignment(): HasOne
+    {
+        return $this->hasOne(EmployeeShiftAssignment::class)->where('is_current', true)->latest('effective_from');
+    }
+
     public function contractor(): BelongsTo
     {
         return $this->belongsTo(Contractor::class);

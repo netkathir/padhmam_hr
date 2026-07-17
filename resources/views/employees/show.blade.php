@@ -135,6 +135,77 @@
                     <dt class="col-sm-3">Override Reason</dt><dd class="col-sm-9">{{ $employee->shift_type_override_reason }}</dd>
                 @endif
             </dl>
+
+            <hr>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h6 text-uppercase text-muted mb-0">Shift Assignment</h2>
+                <div class="d-flex gap-2">
+                    @can('viewHistory', \App\Models\EmployeeShiftAssignment::class)
+                        <a href="{{ route('employee-shifts.history', $employee) }}" class="btn btn-sm btn-outline-secondary">View History</a>
+                    @endcan
+                    @if($employee->currentShiftAssignment)
+                        @if($employee->usesFixedShift())
+                            @can('change', \App\Models\EmployeeShiftAssignment::class)
+                                <a href="{{ route('employee-shifts.change.create', $employee) }}" class="btn btn-sm btn-outline-primary">Change Fixed Shift</a>
+                            @endcan
+                        @endif
+                        @can('temporary', \App\Models\EmployeeShiftAssignment::class)
+                            <a href="{{ route('employee-shifts.temporary.create', $employee) }}" class="btn btn-sm btn-outline-primary">Assign Temporary Shift</a>
+                        @endcan
+                    @else
+                        @can('create', \App\Models\EmployeeShiftAssignment::class)
+                            <a href="{{ route('employee-shifts.create', $employee) }}" class="btn btn-sm btn-primary">Assign Shift</a>
+                        @endcan
+                    @endif
+                </div>
+            </div>
+
+            @if($employee->currentShiftAssignment)
+                <dl class="row mb-0">
+                    <dt class="col-sm-3">Current Shift</dt>
+                    <dd class="col-sm-9">
+                        {{ $employee->currentShiftAssignment->shift?->shift_name }}
+                        <span class="badge bg-secondary-subtle text-dark border">{{ ucfirst($employee->currentShiftAssignment->assignment_type) }}</span>
+                    </dd>
+                    <dt class="col-sm-3">Effective From</dt>
+                    <dd class="col-sm-9">{{ $employee->currentShiftAssignment->effective_from?->format(config('hrms.date_format')) }}</dd>
+                    @if($employee->currentShiftAssignment->effective_to)
+                        <dt class="col-sm-3">Effective To</dt>
+                        <dd class="col-sm-9">{{ $employee->currentShiftAssignment->effective_to->format(config('hrms.date_format')) }}</dd>
+                    @endif
+                </dl>
+            @else
+                <x-empty-state title="Shift Assignment Pending" message="This Employee has no current Shift assignment. Use Assign Shift to create one." />
+            @endif
+
+            @if($employee->scheduledShiftAssignments->isNotEmpty())
+                <h2 class="h6 text-uppercase text-muted mt-4 mb-3">Upcoming Scheduled Assignments</h2>
+                <x-data-table class="table mb-0">
+                    <thead>
+                    <tr>
+                        <th>Shift</th>
+                        <th>Type</th>
+                        <th>Effective From</th>
+                        <th>Effective To</th>
+                        <th class="text-end">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($employee->scheduledShiftAssignments as $scheduled)
+                        <tr>
+                            <td>{{ $scheduled->shift?->shift_name }}</td>
+                            <td>{{ ucfirst($scheduled->assignment_type) }}</td>
+                            <td>{{ $scheduled->effective_from?->format(config('hrms.date_format')) }}</td>
+                            <td>{{ $scheduled->effective_to?->format(config('hrms.date_format')) ?? 'Open' }}</td>
+                            <td class="text-end">
+                                <a href="{{ route('employee-shifts.show', $scheduled) }}" class="btn btn-sm btn-outline-secondary">View</a>
+                            </td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </x-data-table>
+            @endif
         </div>
 
         <div class="tab-pane fade" id="tab-contact">

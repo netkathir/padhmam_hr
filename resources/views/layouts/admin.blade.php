@@ -192,9 +192,14 @@
                 <a class="nav-link {{ request()->routeIs('shifts.master.*') ? 'active' : '' }}" href="{{ route('shifts.master.index') }}">
                     <i class="bi bi-clock-history me-2"></i>Shift Master
                 </a>
-                <span class="nav-link disabled">Employee Shift Assignment</span>
-                <span class="nav-link disabled">Rotational Shift Assignment</span>
-                <span class="nav-link disabled">Shift Change History</span>
+                @can('viewAny', \App\Models\EmployeeShiftAssignment::class)
+                    <a class="nav-link {{ request()->routeIs('employee-shifts.index') ? 'active' : '' }}" href="{{ route('employee-shifts.index') }}">
+                        <i class="bi bi-person-badge me-2"></i>Employee Shift Assignments
+                    </a>
+                    <a class="nav-link {{ request()->routeIs('employee-shifts.pending') ? 'active' : '' }}" href="{{ route('employee-shifts.pending') }}">
+                        <i class="bi bi-hourglass-split me-2"></i>Shift Assignment Pending
+                    </a>
+                @endcan
             @endcan
 
             @can('viewAny', \App\Models\Employee::class)

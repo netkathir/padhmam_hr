@@ -101,6 +101,15 @@ return [
             'employee-document.download',
             'employee-document.inactivate',
         ],
+        'Employee Shift Assignment' => [
+            'employee-shift-assignment.view',
+            'employee-shift-assignment.create',
+            'employee-shift-assignment.edit-scheduled',
+            'employee-shift-assignment.change',
+            'employee-shift-assignment.temporary',
+            'employee-shift-assignment.cancel',
+            'employee-shift-assignment.view-history',
+        ],
         'Contractor' => [
             'contractor.view',
             'contractor.create',

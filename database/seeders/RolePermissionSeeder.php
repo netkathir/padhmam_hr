@@ -108,6 +108,13 @@ class RolePermissionSeeder extends Seeder
                 'employee-document.upload',
                 'employee-document.download',
                 'employee-document.inactivate',
+                'employee-shift-assignment.view',
+                'employee-shift-assignment.create',
+                'employee-shift-assignment.edit-scheduled',
+                'employee-shift-assignment.change',
+                'employee-shift-assignment.temporary',
+                'employee-shift-assignment.cancel',
+                'employee-shift-assignment.view-history',
             ])->pluck('id')->all()),
             'payroll-administrator' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -127,6 +134,8 @@ class RolePermissionSeeder extends Seeder
                 'employee.view',
                 'employee.view-sensitive',
                 'employee-document.view',
+                'employee-shift-assignment.view',
+                'employee-shift-assignment.view-history',
             ])->pluck('id')->all()),
             'branch-administrator' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -168,6 +177,8 @@ class RolePermissionSeeder extends Seeder
                 'employee-document.view',
                 'employee-document.upload',
                 'employee-document.download',
+                'employee-shift-assignment.view',
+                'employee-shift-assignment.view-history',
             ])->pluck('id')->all()),
             'management-user' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -185,6 +196,7 @@ class RolePermissionSeeder extends Seeder
                 'shift.view',
                 'employee.view',
                 'employee-document.view',
+                'employee-shift-assignment.view',
             ])->pluck('id')->all()),
             'employee-user' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',

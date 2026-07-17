@@ -6,10 +6,12 @@ use App\Models\Branch;
 use App\Models\ContractorBranchEngagement;
 use App\Models\Employee;
 use App\Models\EmployeeType;
+use App\Models\Shift;
 use App\Models\User;
 use App\Services\AuditService;
 use App\Services\EmployeeNumbering\EmployeeNumberGeneratorService;
 use App\Services\EmployeeNumbering\EmployeeNumberReservationService;
+use App\Services\EmployeeShifts\EmployeeShiftAssignmentService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +30,7 @@ class EmployeeRegistrationService
         private readonly EmployeeHistoryService $historyService,
         private readonly EmployeeNumberGeneratorService $numberGenerator,
         private readonly EmployeeNumberReservationService $reservationService,
+        private readonly EmployeeShiftAssignmentService $shiftAssignmentService,
     ) {
     }
 
@@ -258,6 +261,11 @@ class EmployeeRegistrationService
             $locked->save();
 
             $this->employeeService->syncRelatedRecords($locked, $contact, $addresses, $statutory, $bank, $emergencyContacts, $actor, $request);
+
+            if ($locked->usesFixedShift() && $locked->fixed_shift_id) {
+                $shift = Shift::query()->withoutGlobalScopes()->findOrFail($locked->fixed_shift_id);
+                $this->shiftAssignmentService->createInitialFixedAssignment($locked, $shift, $dateOfJoining, $actor, $request);
+            }
 
             $this->reservationService->finalize($reservation, $request);
 

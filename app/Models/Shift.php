@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Shift extends Model
 {
@@ -165,6 +166,11 @@ class Shift extends Model
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
+    }
+
+    public function employeeShiftAssignments(): HasMany
+    {
+        return $this->hasMany(EmployeeShiftAssignment::class);
     }
 
     public function employeeTypes(): BelongsToMany
@@ -377,7 +383,7 @@ class Shift extends Model
      */
     public function hasOperationalUsage(): bool
     {
-        return false;
+        return $this->employeeShiftAssignments()->whereIn('status', ['scheduled', 'active'])->exists();
     }
 
     /**

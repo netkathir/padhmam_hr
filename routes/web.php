@@ -21,6 +21,11 @@ use App\Http\Controllers\Employees\EmployeeDocumentController;
 use App\Http\Controllers\Employees\EmployeeRegistrationController;
 use App\Http\Controllers\Employees\EmployeeSeparationController;
 use App\Http\Controllers\Employees\EmployeeStatusController;
+use App\Http\Controllers\EmployeeShifts\EmployeeShiftAssignmentController;
+use App\Http\Controllers\EmployeeShifts\EmployeeShiftChangeController;
+use App\Http\Controllers\EmployeeShifts\EmployeeShiftHistoryController;
+use App\Http\Controllers\EmployeeShifts\EmployeeShiftPendingController;
+use App\Http\Controllers\EmployeeShifts\EmployeeTemporaryShiftController;
 use App\Http\Controllers\Masters\DepartmentController;
 use App\Http\Controllers\Masters\DesignationController;
 use App\Http\Controllers\Masters\EmployeeTypeController;
@@ -164,6 +169,27 @@ Route::middleware(['auth', 'branch.context'])->group(function (): void {
         Route::patch('/master/{shift}/activate', [ShiftController::class, 'activate'])->middleware('branch.active')->name('master.activate');
         Route::patch('/master/{shift}/inactivate', [ShiftController::class, 'inactivate'])->middleware('branch.active')->name('master.inactivate');
         Route::post('/master/{shift}/clone', [ShiftController::class, 'clone'])->middleware('branch.active')->name('master.clone');
+    });
+
+    Route::prefix('employee-shifts')->name('employee-shifts.')->group(function (): void {
+        Route::get('/', [EmployeeShiftAssignmentController::class, 'index'])->name('index');
+        Route::get('/pending', [EmployeeShiftPendingController::class, 'index'])->name('pending');
+
+        Route::get('/{employee}/history', [EmployeeShiftHistoryController::class, 'index'])->name('history');
+
+        Route::get('/{employee}/assign', [EmployeeShiftAssignmentController::class, 'create'])->middleware('branch.active')->name('create');
+        Route::post('/{employee}/assign', [EmployeeShiftAssignmentController::class, 'store'])->middleware('branch.active')->name('store');
+
+        Route::get('/{employee}/change', [EmployeeShiftChangeController::class, 'create'])->middleware('branch.active')->name('change.create');
+        Route::post('/{employee}/change', [EmployeeShiftChangeController::class, 'store'])->middleware('branch.active')->name('change.store');
+
+        Route::get('/{employee}/temporary', [EmployeeTemporaryShiftController::class, 'create'])->middleware('branch.active')->name('temporary.create');
+        Route::post('/{employee}/temporary', [EmployeeTemporaryShiftController::class, 'store'])->middleware('branch.active')->name('temporary.store');
+
+        Route::get('/{assignment}/edit', [EmployeeShiftAssignmentController::class, 'edit'])->middleware('branch.active')->name('edit');
+        Route::put('/{assignment}', [EmployeeShiftAssignmentController::class, 'update'])->middleware('branch.active')->name('update');
+        Route::patch('/{assignment}/cancel', [EmployeeShiftAssignmentController::class, 'cancel'])->middleware('branch.active')->name('cancel');
+        Route::get('/{assignment}', [EmployeeShiftAssignmentController::class, 'show'])->name('show');
     });
 
     Route::prefix('employees')->name('employees.')->group(function (): void {

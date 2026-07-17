@@ -102,7 +102,7 @@ class EmployeeController extends Controller
             'branch', 'employeeType', 'department', 'section', 'designation', 'reportingManager',
             'fixedShift', 'contractor', 'contractorBranchEngagement', 'contact', 'addresses',
             'statutoryDetail', 'bankAccounts', 'emergencyContacts', 'documents', 'separation',
-            'createdBy', 'updatedBy',
+            'createdBy', 'updatedBy', 'currentShiftAssignment.shift', 'scheduledShiftAssignments.shift',
         ]);
 
         return view('employees.show', [
