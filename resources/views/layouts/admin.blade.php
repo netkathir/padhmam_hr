@@ -138,6 +138,25 @@
                     <i class="bi bi-journal-text me-2"></i>Audit Logs
                 </a>
             @endcan
+
+            @if(auth()->user()?->hasPermissionTo('department.view') || auth()->user()?->hasPermissionTo('section.view') || auth()->user()?->hasPermissionTo('designation.view'))
+                <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Masters and Configuration</div>
+                @can('viewAny', \App\Models\Department::class)
+                    <a class="nav-link {{ request()->routeIs('masters.departments.*') ? 'active' : '' }}" href="{{ route('masters.departments.index') }}">
+                        <i class="bi bi-diagram-2 me-2"></i>Department Master
+                    </a>
+                @endcan
+                @can('viewAny', \App\Models\Section::class)
+                    <a class="nav-link {{ request()->routeIs('masters.sections.*') ? 'active' : '' }}" href="{{ route('masters.sections.index') }}">
+                        <i class="bi bi-diagram-3 me-2"></i>Section Master
+                    </a>
+                @endcan
+                @can('viewAny', \App\Models\Designation::class)
+                    <a class="nav-link {{ request()->routeIs('masters.designations.*') ? 'active' : '' }}" href="{{ route('masters.designations.index') }}">
+                        <i class="bi bi-person-badge me-2"></i>Designation Master
+                    </a>
+                @endcan
+            @endif
             <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Future Modules</div>
             <span class="nav-link disabled">Employee Management</span>
             <span class="nav-link disabled">Attendance Management</span>

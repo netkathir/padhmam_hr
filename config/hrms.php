@@ -55,6 +55,27 @@ return [
             'permission.view',
             'permission.manage',
         ],
+        'Department' => [
+            'department.view',
+            'department.create',
+            'department.edit',
+            'department.activate',
+            'department.inactivate',
+        ],
+        'Section' => [
+            'section.view',
+            'section.create',
+            'section.edit',
+            'section.activate',
+            'section.inactivate',
+        ],
+        'Designation' => [
+            'designation.view',
+            'designation.create',
+            'designation.edit',
+            'designation.activate',
+            'designation.inactivate',
+        ],
         'Employee' => [
             'employee.view',
             'employee.create',

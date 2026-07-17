@@ -11,6 +11,9 @@ use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\BranchContextController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Masters\DepartmentController;
+use App\Http\Controllers\Masters\DesignationController;
+use App\Http\Controllers\Masters\SectionController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -60,4 +63,34 @@ Route::middleware(['auth', 'branch.context'])->group(function (): void {
 
     Route::get('/audit-logs', [AuditLogController::class, 'index'])->name('audit-logs.index');
     Route::get('/audit-logs/{audit_log}', [AuditLogController::class, 'show'])->name('audit-logs.show');
+
+    Route::prefix('masters')->name('masters.')->group(function (): void {
+        Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+        Route::get('/departments/create', [DepartmentController::class, 'create'])->middleware('branch.active')->name('departments.create');
+        Route::post('/departments', [DepartmentController::class, 'store'])->middleware('branch.active')->name('departments.store');
+        Route::get('/departments/{department}', [DepartmentController::class, 'show'])->name('departments.show');
+        Route::get('/departments/{department}/edit', [DepartmentController::class, 'edit'])->middleware('branch.active')->name('departments.edit');
+        Route::put('/departments/{department}', [DepartmentController::class, 'update'])->middleware('branch.active')->name('departments.update');
+        Route::patch('/departments/{department}/activate', [DepartmentController::class, 'activate'])->middleware('branch.active')->name('departments.activate');
+        Route::patch('/departments/{department}/inactivate', [DepartmentController::class, 'inactivate'])->middleware('branch.active')->name('departments.inactivate');
+        Route::get('/departments/{department}/sections', [SectionController::class, 'byDepartment'])->name('departments.sections');
+
+        Route::get('/sections', [SectionController::class, 'index'])->name('sections.index');
+        Route::get('/sections/create', [SectionController::class, 'create'])->middleware('branch.active')->name('sections.create');
+        Route::post('/sections', [SectionController::class, 'store'])->middleware('branch.active')->name('sections.store');
+        Route::get('/sections/{section}', [SectionController::class, 'show'])->name('sections.show');
+        Route::get('/sections/{section}/edit', [SectionController::class, 'edit'])->middleware('branch.active')->name('sections.edit');
+        Route::put('/sections/{section}', [SectionController::class, 'update'])->middleware('branch.active')->name('sections.update');
+        Route::patch('/sections/{section}/activate', [SectionController::class, 'activate'])->middleware('branch.active')->name('sections.activate');
+        Route::patch('/sections/{section}/inactivate', [SectionController::class, 'inactivate'])->middleware('branch.active')->name('sections.inactivate');
+
+        Route::get('/designations', [DesignationController::class, 'index'])->name('designations.index');
+        Route::get('/designations/create', [DesignationController::class, 'create'])->middleware('branch.active')->name('designations.create');
+        Route::post('/designations', [DesignationController::class, 'store'])->middleware('branch.active')->name('designations.store');
+        Route::get('/designations/{designation}', [DesignationController::class, 'show'])->name('designations.show');
+        Route::get('/designations/{designation}/edit', [DesignationController::class, 'edit'])->middleware('branch.active')->name('designations.edit');
+        Route::put('/designations/{designation}', [DesignationController::class, 'update'])->middleware('branch.active')->name('designations.update');
+        Route::patch('/designations/{designation}/activate', [DesignationController::class, 'activate'])->middleware('branch.active')->name('designations.activate');
+        Route::patch('/designations/{designation}/inactivate', [DesignationController::class, 'inactivate'])->middleware('branch.active')->name('designations.inactivate');
+    });
 });
