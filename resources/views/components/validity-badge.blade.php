@@ -8,6 +8,7 @@
         'Upcoming' => ['bg-info text-dark', 'bi-clock-history'],
         'Inactive' => ['bg-secondary', 'bi-slash-circle'],
         'Not Set' => ['bg-light text-dark border', 'bi-dash-circle'],
+        'Draft' => ['bg-light text-dark border', 'bi-pencil-square'],
     ];
     [$class, $icon] = $map[$label] ?? ['bg-secondary', 'bi-question-circle'];
 @endphp

@@ -109,6 +109,18 @@ return [
             'contractor-document.upload',
             'contractor-document.inactivate',
         ],
+        'Employee Number Rule' => [
+            'employee-number-rule.view',
+            'employee-number-rule.create',
+            'employee-number-rule.edit',
+            'employee-number-rule.activate',
+            'employee-number-rule.inactivate',
+            'employee-number-rule.preview',
+        ],
+        'Employee Number Sequence' => [
+            'employee-number-sequence.view',
+            'employee-number-sequence.adjust',
+        ],
         'Attendance' => [
             'attendance.view',
             'attendance.create',

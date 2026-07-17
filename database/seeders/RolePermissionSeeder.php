@@ -80,6 +80,13 @@ class RolePermissionSeeder extends Seeder
                 'contractor-document.view',
                 'contractor-document.upload',
                 'contractor-document.inactivate',
+                'employee-number-rule.view',
+                'employee-number-rule.create',
+                'employee-number-rule.edit',
+                'employee-number-rule.activate',
+                'employee-number-rule.inactivate',
+                'employee-number-rule.preview',
+                'employee-number-sequence.view',
             ])->pluck('id')->all()),
             'payroll-administrator' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -93,6 +100,8 @@ class RolePermissionSeeder extends Seeder
                 'contractor.view',
                 'contractor-engagement.view',
                 'contractor-document.view',
+                'employee-number-rule.view',
+                'employee-number-sequence.view',
             ])->pluck('id')->all()),
             'branch-administrator' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -119,6 +128,10 @@ class RolePermissionSeeder extends Seeder
                 'contractor-engagement.inactivate',
                 'contractor-document.view',
                 'contractor-document.upload',
+                'employee-number-rule.view',
+                'employee-number-rule.create',
+                'employee-number-rule.edit',
+                'employee-number-rule.preview',
             ])->pluck('id')->all()),
             'management-user' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -131,6 +144,8 @@ class RolePermissionSeeder extends Seeder
                 'contractor.view',
                 'contractor-engagement.view',
                 'contractor-document.view',
+                'employee-number-rule.view',
+                'employee-number-sequence.view',
             ])->pluck('id')->all()),
             'employee-user' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',

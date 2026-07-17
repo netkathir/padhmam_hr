@@ -139,7 +139,7 @@
                 </a>
             @endcan
 
-            @if(auth()->user()?->hasPermissionTo('department.view') || auth()->user()?->hasPermissionTo('section.view') || auth()->user()?->hasPermissionTo('designation.view') || auth()->user()?->hasPermissionTo('employee-type.view'))
+            @if(auth()->user()?->hasPermissionTo('department.view') || auth()->user()?->hasPermissionTo('section.view') || auth()->user()?->hasPermissionTo('designation.view') || auth()->user()?->hasPermissionTo('employee-type.view') || auth()->user()?->hasPermissionTo('employee-number-rule.view') || auth()->user()?->hasPermissionTo('employee-number-sequence.view'))
                 <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Masters and Configuration</div>
                 @can('viewAny', \App\Models\Department::class)
                     <a class="nav-link {{ request()->routeIs('masters.departments.*') ? 'active' : '' }}" href="{{ route('masters.departments.index') }}">
@@ -159,6 +159,16 @@
                 @can('viewAny', \App\Models\EmployeeType::class)
                     <a class="nav-link {{ request()->routeIs('masters.employee-types.*') ? 'active' : '' }}" href="{{ route('masters.employee-types.index') }}">
                         <i class="bi bi-people-fill me-2"></i>Employee Type Master
+                    </a>
+                @endcan
+                @can('viewAny', \App\Models\EmployeeNumberRule::class)
+                    <a class="nav-link {{ request()->routeIs('employee-numbering.rules.*') ? 'active' : '' }}" href="{{ route('employee-numbering.rules.index') }}">
+                        <i class="bi bi-hash me-2"></i>Employee Number Rules
+                    </a>
+                @endcan
+                @can('viewAny', \App\Models\EmployeeNumberSequence::class)
+                    <a class="nav-link {{ request()->routeIs('employee-numbering.sequences.*') ? 'active' : '' }}" href="{{ route('employee-numbering.sequences.index') }}">
+                        <i class="bi bi-list-ol me-2"></i>Employee Number Sequences
                     </a>
                 @endcan
             @endif

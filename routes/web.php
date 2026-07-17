@@ -14,6 +14,8 @@ use App\Http\Controllers\Contractors\ContractorController;
 use App\Http\Controllers\Contractors\ContractorDocumentController;
 use App\Http\Controllers\Contractors\ContractorEngagementController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\EmployeeNumbering\EmployeeNumberRuleController;
+use App\Http\Controllers\EmployeeNumbering\EmployeeNumberSequenceController;
 use App\Http\Controllers\Masters\DepartmentController;
 use App\Http\Controllers\Masters\DesignationController;
 use App\Http\Controllers\Masters\EmployeeTypeController;
@@ -127,5 +129,22 @@ Route::middleware(['auth', 'branch.context'])->group(function (): void {
         Route::put('/engagements/{engagement}', [ContractorEngagementController::class, 'update'])->middleware('branch.active')->name('engagements.update');
         Route::patch('/engagements/{engagement}/activate', [ContractorEngagementController::class, 'activate'])->middleware('branch.active')->name('engagements.activate');
         Route::patch('/engagements/{engagement}/inactivate', [ContractorEngagementController::class, 'inactivate'])->middleware('branch.active')->name('engagements.inactivate');
+    });
+
+    Route::prefix('employee-numbering')->name('employee-numbering.')->group(function (): void {
+        Route::get('/rules', [EmployeeNumberRuleController::class, 'index'])->name('rules.index');
+        Route::get('/rules/create', [EmployeeNumberRuleController::class, 'create'])->middleware('branch.active')->name('rules.create');
+        Route::post('/rules', [EmployeeNumberRuleController::class, 'store'])->middleware('branch.active')->name('rules.store');
+        Route::post('/rules/preview', [EmployeeNumberRuleController::class, 'preview'])->middleware('branch.active')->name('rules.preview');
+        Route::get('/rules/{rule}', [EmployeeNumberRuleController::class, 'show'])->name('rules.show');
+        Route::get('/rules/{rule}/edit', [EmployeeNumberRuleController::class, 'edit'])->middleware('branch.active')->name('rules.edit');
+        Route::put('/rules/{rule}', [EmployeeNumberRuleController::class, 'update'])->middleware('branch.active')->name('rules.update');
+        Route::patch('/rules/{rule}/activate', [EmployeeNumberRuleController::class, 'activate'])->middleware('branch.active')->name('rules.activate');
+        Route::patch('/rules/{rule}/inactivate', [EmployeeNumberRuleController::class, 'inactivate'])->middleware('branch.active')->name('rules.inactivate');
+        Route::post('/rules/{rule}/new-version', [EmployeeNumberRuleController::class, 'createVersion'])->middleware('branch.active')->name('rules.new-version');
+
+        Route::get('/sequences', [EmployeeNumberSequenceController::class, 'index'])->name('sequences.index');
+        Route::get('/sequences/{sequence}', [EmployeeNumberSequenceController::class, 'show'])->name('sequences.show');
+        Route::patch('/sequences/{sequence}/adjust', [EmployeeNumberSequenceController::class, 'adjust'])->middleware('branch.active')->name('sequences.adjust');
     });
 });
