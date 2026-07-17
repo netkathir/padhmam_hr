@@ -162,6 +162,21 @@
                     </a>
                 @endcan
             @endif
+
+            @if(auth()->user()?->hasPermissionTo('contractor.view') || auth()->user()?->hasPermissionTo('contractor-engagement.view'))
+                <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Contractor Management</div>
+                @can('viewAny', \App\Models\Contractor::class)
+                    <a class="nav-link {{ request()->routeIs('contractors.master.*') ? 'active' : '' }}" href="{{ route('contractors.master.index') }}">
+                        <i class="bi bi-briefcase me-2"></i>Contractor Master
+                    </a>
+                @endcan
+                @can('viewAny', \App\Models\ContractorBranchEngagement::class)
+                    <a class="nav-link {{ request()->routeIs('contractors.engagements.*') ? 'active' : '' }}" href="{{ route('contractors.engagements.index') }}">
+                        <i class="bi bi-file-earmark-text me-2"></i>Branch Engagements
+                    </a>
+                @endcan
+            @endif
+
             <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Future Modules</div>
             <span class="nav-link disabled">Employee Management</span>
             <span class="nav-link disabled">Attendance Management</span>

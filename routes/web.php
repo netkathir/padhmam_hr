@@ -10,6 +10,9 @@ use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\BranchContextController;
+use App\Http\Controllers\Contractors\ContractorController;
+use App\Http\Controllers\Contractors\ContractorDocumentController;
+use App\Http\Controllers\Contractors\ContractorEngagementController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Masters\DepartmentController;
 use App\Http\Controllers\Masters\DesignationController;
@@ -101,5 +104,28 @@ Route::middleware(['auth', 'branch.context'])->group(function (): void {
         Route::get('/employee-types/{employeeType}', [EmployeeTypeController::class, 'show'])->name('employee-types.show');
         Route::get('/employee-types/{employeeType}/edit', [EmployeeTypeController::class, 'edit'])->name('employee-types.edit');
         Route::put('/employee-types/{employeeType}', [EmployeeTypeController::class, 'update'])->name('employee-types.update');
+    });
+
+    Route::prefix('contractors')->name('contractors.')->group(function (): void {
+        // Contractor profiles are organization-level records (not branch-scoped),
+        // so these routes intentionally do not use the branch.active middleware.
+        Route::resource('master', ContractorController::class)
+            ->parameters(['master' => 'contractor'])
+            ->except(['destroy']);
+        Route::patch('/master/{contractor}/activate', [ContractorController::class, 'activate'])->name('master.activate');
+        Route::patch('/master/{contractor}/inactivate', [ContractorController::class, 'inactivate'])->name('master.inactivate');
+
+        Route::post('/master/{contractor}/documents', [ContractorDocumentController::class, 'store'])->name('documents.store');
+        Route::get('/documents/{document}/download', [ContractorDocumentController::class, 'download'])->name('documents.download');
+        Route::patch('/documents/{document}/inactivate', [ContractorDocumentController::class, 'inactivate'])->name('documents.inactivate');
+
+        Route::get('/engagements', [ContractorEngagementController::class, 'index'])->name('engagements.index');
+        Route::get('/engagements/create', [ContractorEngagementController::class, 'create'])->middleware('branch.active')->name('engagements.create');
+        Route::post('/engagements', [ContractorEngagementController::class, 'store'])->middleware('branch.active')->name('engagements.store');
+        Route::get('/engagements/{engagement}', [ContractorEngagementController::class, 'show'])->name('engagements.show');
+        Route::get('/engagements/{engagement}/edit', [ContractorEngagementController::class, 'edit'])->middleware('branch.active')->name('engagements.edit');
+        Route::put('/engagements/{engagement}', [ContractorEngagementController::class, 'update'])->middleware('branch.active')->name('engagements.update');
+        Route::patch('/engagements/{engagement}/activate', [ContractorEngagementController::class, 'activate'])->middleware('branch.active')->name('engagements.activate');
+        Route::patch('/engagements/{engagement}/inactivate', [ContractorEngagementController::class, 'inactivate'])->middleware('branch.active')->name('engagements.inactivate');
     });
 });

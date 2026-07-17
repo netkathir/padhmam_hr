@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             SectionSeeder::class,
             DesignationSeeder::class,
             EmployeeTypeSeeder::class,
+            ContractorSeeder::class,
         ]);
     }
 }

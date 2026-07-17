@@ -97,6 +97,18 @@ return [
             'contractor.inactivate',
             'contractor.export',
         ],
+        'Contractor Engagement' => [
+            'contractor-engagement.view',
+            'contractor-engagement.create',
+            'contractor-engagement.edit',
+            'contractor-engagement.activate',
+            'contractor-engagement.inactivate',
+        ],
+        'Contractor Document' => [
+            'contractor-document.view',
+            'contractor-document.upload',
+            'contractor-document.inactivate',
+        ],
         'Attendance' => [
             'attendance.view',
             'attendance.create',
@@ -141,6 +153,20 @@ return [
         'password' => env('HRMS_BRANCH_ADMIN_PASSWORD', 'ChangeMe123!'),
         'branch_code' => env('HRMS_BRANCH_ADMIN_BRANCH_CODE', 'HO'),
     ],
+    'contractor_document_types' => [
+        'agreement' => 'Agreement',
+        'labour_licence' => 'Labour Licence',
+        'pan' => 'PAN',
+        'gst_registration' => 'GST Registration',
+        'pf_registration' => 'PF Registration',
+        'esi_registration' => 'ESI Registration',
+        'insurance' => 'Insurance',
+        'identity_proof' => 'Identity Proof',
+        'other' => 'Other',
+    ],
+    'contractor_document_max_kb' => env('HRMS_CONTRACTOR_DOCUMENT_MAX_KB', 5120),
+    'contractor_licence_expiry_warning_days' => env('HRMS_CONTRACTOR_LICENCE_EXPIRY_WARNING_DAYS', 30),
+
     'features' => [
         // Custom Employee Types beyond the three mandatory system
         // classifications (Staff, Company Labour, Contract Labour) are not
