@@ -121,6 +121,14 @@ return [
             'employee-number-sequence.view',
             'employee-number-sequence.adjust',
         ],
+        'Shift' => [
+            'shift.view',
+            'shift.create',
+            'shift.edit',
+            'shift.activate',
+            'shift.inactivate',
+            'shift.clone',
+        ],
         'Attendance' => [
             'attendance.view',
             'attendance.create',
@@ -178,6 +186,16 @@ return [
     ],
     'contractor_document_max_kb' => env('HRMS_CONTRACTOR_DOCUMENT_MAX_KB', 5120),
     'contractor_licence_expiry_warning_days' => env('HRMS_CONTRACTOR_LICENCE_EXPIRY_WARNING_DAYS', 30),
+    'shift_day_codes' => [
+        'MON' => 'Monday',
+        'TUE' => 'Tuesday',
+        'WED' => 'Wednesday',
+        'THU' => 'Thursday',
+        'FRI' => 'Friday',
+        'SAT' => 'Saturday',
+        'SUN' => 'Sunday',
+    ],
+    'shift_grace_minutes_max' => env('HRMS_SHIFT_GRACE_MINUTES_MAX', 480),
 
     'features' => [
         // Custom Employee Types beyond the three mandatory system

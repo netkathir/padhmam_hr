@@ -87,6 +87,12 @@ class RolePermissionSeeder extends Seeder
                 'employee-number-rule.inactivate',
                 'employee-number-rule.preview',
                 'employee-number-sequence.view',
+                'shift.view',
+                'shift.create',
+                'shift.edit',
+                'shift.activate',
+                'shift.inactivate',
+                'shift.clone',
             ])->pluck('id')->all()),
             'payroll-administrator' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -102,6 +108,7 @@ class RolePermissionSeeder extends Seeder
                 'contractor-document.view',
                 'employee-number-rule.view',
                 'employee-number-sequence.view',
+                'shift.view',
             ])->pluck('id')->all()),
             'branch-administrator' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -132,6 +139,10 @@ class RolePermissionSeeder extends Seeder
                 'employee-number-rule.create',
                 'employee-number-rule.edit',
                 'employee-number-rule.preview',
+                'shift.view',
+                'shift.create',
+                'shift.edit',
+                'shift.clone',
             ])->pluck('id')->all()),
             'management-user' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -146,6 +157,7 @@ class RolePermissionSeeder extends Seeder
                 'contractor-document.view',
                 'employee-number-rule.view',
                 'employee-number-sequence.view',
+                'shift.view',
             ])->pluck('id')->all()),
             'employee-user' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',

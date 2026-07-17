@@ -187,6 +187,16 @@
                 @endcan
             @endif
 
+            @can('viewAny', \App\Models\Shift::class)
+                <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Shift Management</div>
+                <a class="nav-link {{ request()->routeIs('shifts.master.*') ? 'active' : '' }}" href="{{ route('shifts.master.index') }}">
+                    <i class="bi bi-clock-history me-2"></i>Shift Master
+                </a>
+                <span class="nav-link disabled">Employee Shift Assignment</span>
+                <span class="nav-link disabled">Rotational Shift Assignment</span>
+                <span class="nav-link disabled">Shift Change History</span>
+            @endcan
+
             <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Future Modules</div>
             <span class="nav-link disabled">Employee Management</span>
             <span class="nav-link disabled">Attendance Management</span>

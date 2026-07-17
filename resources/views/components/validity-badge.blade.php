@@ -3,6 +3,7 @@
 @php
     $map = [
         'Active' => ['bg-success', 'bi-check-circle'],
+        'Current' => ['bg-success', 'bi-check-circle'],
         'Expiring Soon' => ['bg-warning text-dark', 'bi-exclamation-triangle'],
         'Expired' => ['bg-danger', 'bi-x-circle'],
         'Upcoming' => ['bg-info text-dark', 'bi-clock-history'],

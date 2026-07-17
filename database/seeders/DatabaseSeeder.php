@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
             EmployeeTypeSeeder::class,
             ContractorSeeder::class,
             EmployeeNumberRuleSeeder::class,
+            ShiftSeeder::class,
         ]);
     }
 }

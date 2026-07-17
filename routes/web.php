@@ -20,6 +20,7 @@ use App\Http\Controllers\Masters\DepartmentController;
 use App\Http\Controllers\Masters\DesignationController;
 use App\Http\Controllers\Masters\EmployeeTypeController;
 use App\Http\Controllers\Masters\SectionController;
+use App\Http\Controllers\Shifts\ShiftController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -146,5 +147,17 @@ Route::middleware(['auth', 'branch.context'])->group(function (): void {
         Route::get('/sequences', [EmployeeNumberSequenceController::class, 'index'])->name('sequences.index');
         Route::get('/sequences/{sequence}', [EmployeeNumberSequenceController::class, 'show'])->name('sequences.show');
         Route::patch('/sequences/{sequence}/adjust', [EmployeeNumberSequenceController::class, 'adjust'])->middleware('branch.active')->name('sequences.adjust');
+    });
+
+    Route::prefix('shifts')->name('shifts.')->group(function (): void {
+        Route::get('/master', [ShiftController::class, 'index'])->name('master.index');
+        Route::get('/master/create', [ShiftController::class, 'create'])->middleware('branch.active')->name('master.create');
+        Route::post('/master', [ShiftController::class, 'store'])->middleware('branch.active')->name('master.store');
+        Route::get('/master/{shift}', [ShiftController::class, 'show'])->name('master.show');
+        Route::get('/master/{shift}/edit', [ShiftController::class, 'edit'])->middleware('branch.active')->name('master.edit');
+        Route::put('/master/{shift}', [ShiftController::class, 'update'])->middleware('branch.active')->name('master.update');
+        Route::patch('/master/{shift}/activate', [ShiftController::class, 'activate'])->middleware('branch.active')->name('master.activate');
+        Route::patch('/master/{shift}/inactivate', [ShiftController::class, 'inactivate'])->middleware('branch.active')->name('master.inactivate');
+        Route::post('/master/{shift}/clone', [ShiftController::class, 'clone'])->middleware('branch.active')->name('master.clone');
     });
 });
