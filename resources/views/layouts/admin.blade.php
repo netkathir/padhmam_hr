@@ -139,7 +139,7 @@
                 </a>
             @endcan
 
-            @if(auth()->user()?->hasPermissionTo('department.view') || auth()->user()?->hasPermissionTo('section.view') || auth()->user()?->hasPermissionTo('designation.view'))
+            @if(auth()->user()?->hasPermissionTo('department.view') || auth()->user()?->hasPermissionTo('section.view') || auth()->user()?->hasPermissionTo('designation.view') || auth()->user()?->hasPermissionTo('employee-type.view'))
                 <div class="mt-3 pt-3 border-top border-white border-opacity-25 text-white-50 small">Masters and Configuration</div>
                 @can('viewAny', \App\Models\Department::class)
                     <a class="nav-link {{ request()->routeIs('masters.departments.*') ? 'active' : '' }}" href="{{ route('masters.departments.index') }}">
@@ -154,6 +154,11 @@
                 @can('viewAny', \App\Models\Designation::class)
                     <a class="nav-link {{ request()->routeIs('masters.designations.*') ? 'active' : '' }}" href="{{ route('masters.designations.index') }}">
                         <i class="bi bi-person-badge me-2"></i>Designation Master
+                    </a>
+                @endcan
+                @can('viewAny', \App\Models\EmployeeType::class)
+                    <a class="nav-link {{ request()->routeIs('masters.employee-types.*') ? 'active' : '' }}" href="{{ route('masters.employee-types.index') }}">
+                        <i class="bi bi-people-fill me-2"></i>Employee Type Master
                     </a>
                 @endcan
             @endif

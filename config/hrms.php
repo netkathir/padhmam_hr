@@ -76,6 +76,11 @@ return [
             'designation.activate',
             'designation.inactivate',
         ],
+        'Employee Type' => [
+            'employee-type.view',
+            'employee-type.edit',
+            'employee-type.create',
+        ],
         'Employee' => [
             'employee.view',
             'employee.create',
@@ -135,5 +140,12 @@ return [
         'email' => env('HRMS_BRANCH_ADMIN_EMAIL', 'branch.admin@padmamindustries.test'),
         'password' => env('HRMS_BRANCH_ADMIN_PASSWORD', 'ChangeMe123!'),
         'branch_code' => env('HRMS_BRANCH_ADMIN_BRANCH_CODE', 'HO'),
+    ],
+    'features' => [
+        // Custom Employee Types beyond the three mandatory system
+        // classifications (Staff, Company Labour, Contract Labour) are not
+        // supported yet. Keep disabled until a future phase implements the
+        // dependent Employee Registration numbering and processing rules.
+        'custom_employee_types' => env('HRMS_FEATURE_CUSTOM_EMPLOYEE_TYPES', false),
     ],
 ];

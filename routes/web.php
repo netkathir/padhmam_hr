@@ -13,6 +13,7 @@ use App\Http\Controllers\BranchContextController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Masters\DepartmentController;
 use App\Http\Controllers\Masters\DesignationController;
+use App\Http\Controllers\Masters\EmployeeTypeController;
 use App\Http\Controllers\Masters\SectionController;
 use Illuminate\Support\Facades\Route;
 
@@ -92,5 +93,13 @@ Route::middleware(['auth', 'branch.context'])->group(function (): void {
         Route::put('/designations/{designation}', [DesignationController::class, 'update'])->middleware('branch.active')->name('designations.update');
         Route::patch('/designations/{designation}/activate', [DesignationController::class, 'activate'])->middleware('branch.active')->name('designations.activate');
         Route::patch('/designations/{designation}/inactivate', [DesignationController::class, 'inactivate'])->middleware('branch.active')->name('designations.inactivate');
+
+        // Employee Types are organization-level records (not branch-scoped),
+        // so these routes intentionally do not use the branch.active
+        // middleware — they must remain accessible with "All Branches" selected.
+        Route::get('/employee-types', [EmployeeTypeController::class, 'index'])->name('employee-types.index');
+        Route::get('/employee-types/{employeeType}', [EmployeeTypeController::class, 'show'])->name('employee-types.show');
+        Route::get('/employee-types/{employeeType}/edit', [EmployeeTypeController::class, 'edit'])->name('employee-types.edit');
+        Route::put('/employee-types/{employeeType}', [EmployeeTypeController::class, 'update'])->name('employee-types.update');
     });
 });

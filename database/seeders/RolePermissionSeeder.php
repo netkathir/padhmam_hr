@@ -65,6 +65,8 @@ class RolePermissionSeeder extends Seeder
                 'designation.edit',
                 'designation.activate',
                 'designation.inactivate',
+                'employee-type.view',
+                'employee-type.edit',
             ])->pluck('id')->all()),
             'payroll-administrator' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -74,6 +76,7 @@ class RolePermissionSeeder extends Seeder
                 'department.view',
                 'section.view',
                 'designation.view',
+                'employee-type.view',
             ])->pluck('id')->all()),
             'branch-administrator' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -91,6 +94,7 @@ class RolePermissionSeeder extends Seeder
                 'designation.view',
                 'designation.create',
                 'designation.edit',
+                'employee-type.view',
             ])->pluck('id')->all()),
             'management-user' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
@@ -99,6 +103,7 @@ class RolePermissionSeeder extends Seeder
                 'department.view',
                 'section.view',
                 'designation.view',
+                'employee-type.view',
             ])->pluck('id')->all()),
             'employee-user' => array_values(Permission::query()->whereIn('slug', [
                 'dashboard.view',
