@@ -16,7 +16,6 @@
 /public/build
 /public/hot
 /public/storage
-/public/.htaccess
 /storage/*.key
 /storage/pail
 /vendor
